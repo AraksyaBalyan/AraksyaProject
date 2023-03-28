@@ -32,7 +32,9 @@ class Todo extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.tasks.length !== this.state.tasks.length || this.state.newTaskTitle.length) return true;
+    if (nextState.tasks.length !== this.state.tasks.length
+      || this.state.newTaskTitle.length
+      || this.state.selectedTasks.size !== nextState.selectedTasks.size) return true;
     return !nextState.tasks.every(task => this.state.tasks.includes(task));
   }
 
@@ -93,10 +95,9 @@ class Todo extends Component {
     this.setState({ selectedTasks });
   };
 
-  deleteSelectedTasks = () => {
+  deleteSelectedTasks = (e) => {
     const newTasks = [];
     const { selectedTasks, tasks } = this.state;
-
     tasks.forEach((task) => {
       if (!selectedTasks.has(task.id)) {
         newTasks.push(task);
