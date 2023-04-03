@@ -5,7 +5,6 @@ import Counter from './components/counter/Counter';
 function App() {
   return (
     <main>
-        <Counter />
         <Todo />
     </main>
   );

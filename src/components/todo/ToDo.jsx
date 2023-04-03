@@ -18,25 +18,9 @@ class Todo extends Component {
     tasks: [],
     newTaskTitle: "",
     selectedTasks: new Set(),
+    tasksToDelete: new Set(),
+    isConfirmDialogOpen: false,
   };
-
-  componentDidMount() {
-    console.log("Todo componentDidMount");
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    // if (prevState.tasks.length < this.state.tasks.length) {
-    //   console.log("A new task has been added");
-    // }
-    console.log("Todo componentDidUpdate");
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.tasks.length !== this.state.tasks.length
-      || this.state.newTaskTitle.length
-      || this.state.selectedTasks.size !== nextState.selectedTasks.size) return true;
-    return !nextState.tasks.every(task => this.state.tasks.includes(task));
-  }
 
   handleInputChange = (event) => {
     event.preventDefault();
@@ -72,40 +56,49 @@ class Todo extends Component {
   };
 
   onTaskDelete = (taskId) => {
-    const { selectedTasks, tasks } = this.state;
-    const newTasks = tasks.filter((task) => task.id !== taskId);
-
-    const newState = { tasks: newTasks };
-
-    if (selectedTasks.has(taskId)) {
-      const newSelectedTasks = new Set(selectedTasks);
-      newSelectedTasks.delete(taskId);
-      newState.selectedTasks = newSelectedTasks;
-    }
-    this.setState(newState);
+    const { tasksToDelete } = this.state;
+    this.setState({
+      tasksToDelete: tasksToDelete.add(taskId)
+    });
+    this.setConfirmDialogOpenState(true)();
   };
 
   onTaskSelect = (taskId) => {
     const selectedTasks = new Set(this.state.selectedTasks);
+    const { tasksToDelete } = this.state;
     if (selectedTasks.has(taskId)) {
       selectedTasks.delete(taskId);
+      tasksToDelete.delete(taskId);
     } else {
       selectedTasks.add(taskId);
+      tasksToDelete.add(taskId);
     }
-    this.setState({ selectedTasks });
+    this.setState({ selectedTasks, tasksToDelete });
   };
 
-  deleteSelectedTasks = (e) => {
+  deleteTasks = () => {
     const newTasks = [];
-    const { selectedTasks, tasks } = this.state;
+    let updatedSelectedTasks = [];
+    const { tasks,tasksToDelete, selectedTasks } = this.state;
     tasks.forEach((task) => {
-      if (!selectedTasks.has(task.id)) {
+      if (!tasksToDelete.has(task.id)) {
         newTasks.push(task);
+      }
+      if (selectedTasks.has(task.id)) {
+        updatedSelectedTasks = Array.from(selectedTasks).filter(t => task.id === t.id)
       }
     });
     this.setState({
       tasks: newTasks,
-      selectedTasks: new Set(),
+      tasksToDelete: new Set(),
+      selectedTasks: new Set(updatedSelectedTasks),
+      isConfirmDialogOpen: false
+    });
+  }
+
+  setConfirmDialogOpenState = (isDialogOpen)=> () => {
+    this.setState({
+      isConfirmDialogOpen: isDialogOpen
     });
   };
 
@@ -149,12 +142,17 @@ class Todo extends Component {
         <Button
           className={styles.deletSelected}
           variant="danger"
-          onClick={this.deleteSelectedTasks}
+          onClick={this.setConfirmDialogOpenState(true)}
           disabled={!this.state.selectedTasks.size}
         >
           Delete selected
         </Button>
-        <ConfirmDialog />
+        {this.state.isConfirmDialogOpen && 
+          <ConfirmDialog 
+          tasksCount={this.state.selectedTasks.size}
+          onCancel={this.setConfirmDialogOpenState}
+          onSubmit={this.deleteTasks}
+          />}
       </Container>
     );
   }
