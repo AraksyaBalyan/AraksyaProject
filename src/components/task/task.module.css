@@ -1,0 +1,29 @@
+.actionButton{
+    margin-left: 10px;
+}
+
+.actionButtons{
+    display: flex;
+    justify-content: right;
+}
+
+.selectTask{
+    width: 18px;
+    height: 18px;
+    margin-bottom: 30px;
+}
+
+.selectTask input{
+    cursor: pointer;
+}
+
+.textElipsis{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: flex-start;
+}
