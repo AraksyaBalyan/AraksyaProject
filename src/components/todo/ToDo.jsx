@@ -114,7 +114,6 @@ const getTasks = (filters)=>{
     taskApi
       .update(editedTask)
       .then((task) => {
-        console.log("task", task);
         const newTasks = [...tasks];
         const foundIndex = newTasks.findIndex((t)=>t._id === task._id);
         newTasks[foundIndex] = task;

@@ -3,7 +3,6 @@ import { Form, Button, Modal } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
 import { formatDate } from "../../utils/helpers";
-// import styles from "./taskModal.module.css";
 
 function TaskModal(props) {
   const [title, setTitle] = useState("");
@@ -62,7 +61,6 @@ function TaskModal(props) {
       </Modal.Header>
       <Modal.Body>
         <Form.Control
-          // className={[styles.invalid, 'mb-3'].join(' ')}
           className={`mb-3`}
           style={{"outline": "1px solid red;"}}
           placeholder="Title"

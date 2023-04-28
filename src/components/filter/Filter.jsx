@@ -143,7 +143,7 @@ function Filters(props) {
             <Row>
               <Col sm={6} className="text-center">
                 <fieldset>
-                  <legend>Staus</legend>
+                  <legend>Status</legend>
                   <Form.Select 
                   onChange={(event)=>onFilterOptionChange('status', event.target.value)}
                   value={optionFilters.status}
