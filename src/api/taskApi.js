@@ -29,7 +29,6 @@ export default class TaskApi {
       url+=query;
     }
   
-    console.log(url);
     return fetch(url, req)
     .then((result) => result.json())
     .then((data) => {

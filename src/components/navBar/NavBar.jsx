@@ -11,9 +11,9 @@ function NavBar() {
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0">
-            <Nav.Link href="#action1">Tasks</Nav.Link>
-            <Nav.Link href="#action2">About</Nav.Link>
-            <Nav.Link href="#action2">Contact us</Nav.Link>
+            <Nav.Link href="#tasks">Tasks</Nav.Link>
+            <Nav.Link href="#about">About</Nav.Link>
+            <Nav.Link href="#contact-us">Contact us</Nav.Link>
           </Nav>
           
         </Navbar.Collapse>

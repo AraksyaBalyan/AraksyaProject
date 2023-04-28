@@ -1,7 +1,6 @@
 import { useState, memo } from "react";
 import { Button } from "react-bootstrap";
 import ConfirmDialog from "../ConfirmDialog";
-// import styles from "./deleteSelected.module.css";
 
 function DeleteSelected(props) {
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
@@ -13,7 +12,6 @@ function DeleteSelected(props) {
   return (
     <>
       <Button
-        // className={styles.deletSelected}
         variant="danger"
         onClick={toggleConfirmDialog}
         disabled={props.disabled}
